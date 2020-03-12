@@ -1,0 +1,4 @@
+Time,Variable,AssetId,Value
+2019-11-25 00:50:00.0,power,abc123xyz,1600
+2019-11-25 00:50:01.0,power,abc123xyz,1598
+2019-11-25 00:50:02.0,power,abc123xyz,1596

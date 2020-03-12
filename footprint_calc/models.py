@@ -43,7 +43,6 @@ def create_df_from_objects(half_hour_data):
     df = pd.DataFrame(list(zip(asset_power, carbon_intensity)), index=time_period,
                       columns=['asset_power', 'carbon_intensity'])
     df.index.name = 'Time Period'
-    print(df)
     return df
 
 

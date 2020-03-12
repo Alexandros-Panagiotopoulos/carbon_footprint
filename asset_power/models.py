@@ -4,13 +4,9 @@ import numpy as np
 
 class AssetPower:
 
-    def __init__(self, path, asset_id, date):
-        self.path = path
-        self.asset_id = asset_id
+    def __init__(self, asset_power_all, date):
         self.date = pd.to_datetime(date, format='%Y-%m-%d')
-        asset_power_all = pd.read_csv(path, usecols=['Time', 'AssetId', 'Value'], encoding='utf-8')
-        self.asset_power_all = asset_power_all[asset_power_all['AssetId'] == asset_id]
-        # If csv file is large with many assetIds we could use an iterator to reduce the used memory
+        self.asset_power_all = asset_power_all
 
     def calculate_cov_based_asset_power(self):
         self.asset_power_all['Time'] = pd.to_datetime(self.asset_power_all['Time'], format='%Y-%m-%d %H:%M:%S.%f')
@@ -45,7 +41,7 @@ class AssetPower:
 
         #   The last value of half hour periods is saved to fill missing values
         asset_power_last = self.asset_power_all.groupby(pd.cut(self.asset_power_all["Time"],
-                                                          np.arange(start-delta, end, delta)))['Value'].last()
+                                                        np.arange(start-delta, end, delta)))['Value'].last()
         asset_power_last = pd.DataFrame(asset_power_last).reset_index()
         asset_power_last.columns = ['DateTime', 'last_value']
         asset_power_last['last_value'].fillna(method='ffill', inplace=True)
